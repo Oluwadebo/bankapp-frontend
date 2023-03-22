@@ -201,3 +201,6 @@ code {
 .alig {
   text-align: center;
 }
+.butt {
+  border-radius: 10px;
+}

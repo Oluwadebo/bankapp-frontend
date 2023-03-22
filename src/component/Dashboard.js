@@ -27,6 +27,7 @@ const Dashboard = (props) => {
     let year = new Date().toLocaleDateString();
     let time = new Date().toLocaleTimeString();
     let transactiontime = `${year}  ${time}`
+    const [copied, setCopied] = useState(false);
 
     const [allUser, setallUser] = useState([])
     const [currentuserdetails, setcurrentuserdetails] = useState({})
@@ -63,6 +64,14 @@ const Dashboard = (props) => {
     const logout = () => {
         localStorage.removeItem("bank")
         navigate('/SignIn')
+    }
+    const handleClick = () => {
+        const textToCopy = customers.accountNumber;
+        navigator.clipboard.writeText(textToCopy);
+        setCopied(true);
+        setTimeout(() => {
+            setCopied(false);
+        }, 2000);
     }
     let myStyle = {
         fontSize: '20px',
@@ -348,11 +357,27 @@ const Dashboard = (props) => {
                     <div className="row my-3 p-3 shadow ad">
                         <div className="col-12 col-md-6">
                             <div className="row">
-                                <div className="col-9">
+                                <div className="col-7">
                                     <p className='pt-2'>Account Number</p>
                                 </div>
-                                <div className="col-3">
-                                    <h5 className='pt-2' style={{ float: 'right' }}>{customers.accountNumber}</h5>
+                                <div className="col-5">
+                                    <h5 className='pt-2' style={{ float: 'right' }}>
+                                        <div className="row">
+                                            <div className="col-5 mx-3">
+                                                <span className='d-flex'>
+                                                    {customers.accountNumber}
+                                                    <button className='butt mx-1 d-block d-md-none' onClick={handleClick}>
+                                                        {copied ? 'Copied!' : <i class="fa fa-copy"></i>}
+                                                    </button>
+                                                </span>
+                                            </div>
+                                            <div className="col-5 d-none d-md-inline">
+                                                <button className='butt mx-1' onClick={handleClick}>
+                                                    {copied ? 'Copied!' : <i class="fa fa-copy"></i>}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </h5>
                                 </div>
                             </div>
                         </div>
